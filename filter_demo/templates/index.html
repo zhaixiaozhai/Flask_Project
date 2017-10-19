@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body>
+    <img src="{{ avatar|default('http://g.izhuo.me/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png') }}">
+    <hr/>
+    <p>评论数：({{ comments|length }})</p>
+    <ul>
+        {% for i in comments %}
+            <li>
+                <a href="#">{{ i.user }}</a>
+                <p>{{ i.content }}</p>
+            </li>
+            <hr/>
+        {% endfor %}
+    </ul>
+</body>
+</html>
