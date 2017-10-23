@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/regist.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="form-cotainer">
+    <h3 class="regist-title">Sign up</h3>
+    <form action="" method="post">
+        <div class="form-cotainer">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Phone number</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone number" name="phonenumber">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">UserName</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="User Name" name="username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Password</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Password" name="password1">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Confirm Password</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" name="password2">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block title %}注册{% endblock %}
