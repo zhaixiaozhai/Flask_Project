@@ -7,7 +7,8 @@ from flask import session
 from decorators import login_required
 import config
 from exts import db
-from models import User,Question
+from models import User,Question,Comment
+from sqlalchemy import or_
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -92,6 +93,30 @@ def question():
 def detail(question_id):
     question_model=Question.query.filter(Question.id==question_id).first()
     return render_template('detail.html',question=question_model)
+
+@app.route('/add_comment/',methods=['POST'])
+@login_required
+def add_comment():
+    user_content = request.form.get('comment_content')
+    question_id = request.form.get('question_id')
+
+    comment = Comment(content=user_content)
+    user_id = session['user_id']
+    user = User.query.filter(User.id == user_id).first()
+    comment.author = user
+
+    question = Question.query.filter(Question.id==question_id).first()
+    comment.question=question
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('detail',question_id=question_id))
+
+@app.route('/search/')
+def search():
+    q = request.args.get('q')
+    # 查找关键字在title或者content
+    result = Question.query.filter(or_(Question.title.contains(q),Question.content.contains(q))).order_by('-create_time')
+    return render_template('index.html',questions=result)
 # 上下文处理器应该返回一个字典，字典中的'key'会被模板中当成变量来渲染
 # 上下文处理器中返回的字典，在所有页面中都是可用的
 # 被这个装饰器修饰的钩子函数，即使为空必须要返回一个字典
